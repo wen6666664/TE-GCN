@@ -1,6 +1,6 @@
-# TiRGN
+# TE-GCN
 
-This is the code of TiRGN.
+This is the code of TE-GCN.
 
 
 ### Installation
@@ -100,19 +100,4 @@ python main.py -d YAGO --history-rate 0.3 --train-history-len 1 --test-history-l
 
 ~~~
 python main.py -d GDELT --history-rate 0.3 --train-history-len 7 --test-history-len 7 --dilate-len 1 --lr 0.001 --n-layers 2 --evaluate-every 1 --n-hidden 200 --self-loop --decoder timeconvtranse --encoder convgcn --layer-norm --weight 0.5  --entity-prediction --relation-prediction --angle 10 --discount 1 --task-weight 0.7 --gpu 0 --save checkpoint --test
-~~~
-
-
-
-### Cite
-
-Please cite as:
-~~~
-@inproceedings{DBLP:conf/ijcai/LiS022,
-  author    = {Yujia Li and Shiliang Sun and Jing Zhao},
-  title     = {TiRGN: Time-Guided Recurrent Graph Network with Local-Global Historical Patterns for Temporal Knowledge Graph Reasoning},
-  booktitle = {Proceedings of the Thirty-First International Joint Conference on Artificial Intelligence, {IJCAI} 2022, Vienna, Austria, 23-29 July 2022},
-  pages     = {2152--2158},
-  year      = {2022},
-}
 ~~~
