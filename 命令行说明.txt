@@ -1,0 +1,38 @@
+
+
+
+如果要跑含gat的,只要在命令行添加 --usegat 1 ，如果不用gat的，则添加--usegat -1
+
+一维卷积操作
+class UnionRGCNLayer(nn.Module):
+    def __init__(self, in_feat, out_feat, num_rels, num_bases=-1, bias=None,
+                 activation=None, self_loop=False, dropout=0.0, skip_connect=False, rel_emb=None, headnums=4, usegat=1,
+                 s_frequency=s_frequency_reduced_resized, o_frequency=o_frequency_reduced_resized):
+        super(UnionRGCNLayer, self).__init__()
+        # 其他初始化和参数定义部分省略...
+
+        # 一维卷积层
+        channels = 1
+        kernel_size = 1
+        self.conv1d = torch.nn.Conv1d(2, channels, kernel_size, stride=1,
+                                      padding=int(math.floor(kernel_size / 2)))
+        self.gnn_bn0 = torch.nn.BatchNorm1d(2)
+
+        # 其他初始化和参数定义部分省略...
+
+    def msg_func(self, edges):
+        # 提取边的特征和类型
+        relation = self.rel_emb.index_select(0, edges.data['type']).view(-1, self.out_feat)
+        edge_type = edges.data['type']
+        edge_num = edge_type.shape[0]
+        node = edges.src['h'].view(-1, self.out_feat)
+
+        # 将节点特征和关系特征拼接
+        stacked_inputs = torch.cat([node, relation], 1)
+        stacked_inputs = self.gnn_bn0(stacked_inputs)
+
+        # 一维卷积
+        msg = self.conv1d(stacked_inputs)
+        return {'msg': msg}
+
+    # 其他方法和逻辑省略...
